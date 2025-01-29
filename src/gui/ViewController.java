@@ -1,15 +1,19 @@
 package gui;
 
+import java.net.URL;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import gui.util.Alerts;
+import gui.util.Constraints;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class ViewController {// aqui é classe responssavel por controlar a tela
+public class ViewController implements Initializable {// aqui é classe responssavel por controlar a tela
 
 	@FXML
 	private TextField txtNumber1;
@@ -22,9 +26,6 @@ public class ViewController {// aqui é classe responssavel por controlar a tela
 
 	@FXML
 	private Button btSum;
-	
-	@FXML
-	private Button btMult;
 
 	@FXML
 	public void onBtSumAction() {
@@ -34,16 +35,20 @@ public class ViewController {// aqui é classe responssavel por controlar a tela
 			double number1 = Double.parseDouble(txtNumber1.getText());
 			double number2 = Double.parseDouble(txtNumber2.getText());
 
-				
 			double sum = number1 + number2;
-			double mult = number1 * number2;
-			
-			labelResult.setText(String.format("%.2f", sum));
-			labelResult.setText(String.format("%.2f", mult));
+
+			labelResult.setText(String.format("%.2f", sum ));
 
 		} catch (NumberFormatException e) {
 			Alerts.showAlert("Error", "parse error", e.getMessage(), AlertType.ERROR);
 		}
+	}
 
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		Constraints.setTextFieldDouble(txtNumber1);
+		Constraints.setTextFieldDouble(txtNumber2);
+		Constraints.setTextFieldMaxLength(txtNumber1, 12);
+		Constraints.setTextFieldMaxLength(txtNumber2, 12);
 	}
 }
